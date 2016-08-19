@@ -13,6 +13,7 @@ PATH=${PATH}:"/Applications/VMware Fusion.app/Contents/Library/"
 SCRIPT_NAME="$(basename ${0})"
 VMX_PATH="${2}"
 
+
 #
 # Is the VM currently running? Save it into a variable to test in other functions.
 #
@@ -73,7 +74,7 @@ function Stop()
 		exit 0
 	fi
 	
-	TOOL_STATUS=$(vmrun checkToolsState ${VMX_PATH})
+	TOOL_STATUS=$(vmrun checkToolsState "${VMX_PATH}")
 	
 	if [[ ${TOOL_STATUS} == "installed" ]]; then
 		Log "VMware tools are: ${TOOL_STATUS}. Attempting a soft shutdown."
@@ -115,7 +116,7 @@ while [[ true ]]; do
 
 	# Uncomment this line if you want to see the run loop.
 	#Log "Checking on the status of VM with PID ${ACTIVE_PID}"
-	ps ${ACTIVE_PID} |sed 1d |grep -o ${VMX_PATH} > /dev/null
+	ps ${ACTIVE_PID} |sed 1d |grep -o "${VMX_PATH}" > /dev/null
 	
 	if [[ ${?} != 0 ]]; then
 		Log "VM at ${VMX_PATH} with PID ${ACTIVE_PID} appears to have died. Exiting..."
